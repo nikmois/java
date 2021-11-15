@@ -107,8 +107,7 @@ public class DatabaseApplication extends ConsoleMenuApp
         int EmployeeToChange = scanner.nextInt();
         for (int i = 0; i < employees.size(); i++)
         {
-            if(employees.get(i).getID() == EmployeeToChange)
-            {
+            if(employees.get(i).getID() == EmployeeToChange) {
                 System.out.println("Choose what you want to change");
                 System.out.println("1. First name");
                 System.out.println("2. Last name");
@@ -117,46 +116,44 @@ public class DatabaseApplication extends ConsoleMenuApp
 
                 String new_name = scanner.next();
 
-                switch(new_name)
-                {
+                switch (new_name) {
                     case "1":
                         System.out.print("Enter new first name: ");
                         String name = scanner.next();
                         employees.get(i).setFirstName(name);
-                        System.out.println("New first name is "+name);
+                        System.out.println("New first name is " + name);
                         System.out.println(" ");
                         break;
                     case "2":
                         System.out.print("Enter new last name: ");
                         String lastname = scanner.next();
                         employees.get(i).setLastName(lastname);
-                        System.out.println("New last name is "+lastname);
+                        System.out.println("New last name is " + lastname);
                         System.out.println(" ");
                         break;
                     case "3":
                         System.out.print("Enter new birthday: ");
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                        LocalDate birthday = LocalDate.parse(scanner.next(),formatter);
+                        LocalDate birthday = LocalDate.parse(scanner.next(), formatter);
                         employees.get(i).setBirthday(birthday);
-                        System.out.println("New birthday "+birthday);
+                        System.out.println("New birthday " + birthday);
                         System.out.println(" ");
                         break;
                     case "4":
                         System.out.print("Enter employee salary: ");
                         Double salary = scanner.nextDouble();
                         employees.get(i).setSalary(salary);
-                        System.out.println("Employee salary is "+salary);
+                        System.out.println("Employee salary is " + salary);
                         System.out.println(" ");
                     default:
                         System.out.println("Unknown operation.");
                         System.out.println(" ");
                         break;
                 }
-
+                return;
             }
-            else{System.out.println("User with this ID doesn't exist");}
-            break;
         }
+        System.out.println("User with this ID doesn't exist");
     }
 
     void TestData()
