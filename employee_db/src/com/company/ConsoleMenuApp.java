@@ -8,9 +8,9 @@ class MenuItem
 {
     public char Symbol;
     public String Caption;
-    public Function<ConsoleMenuApp, Void> Operation;
+    public Runnable Operation;
 
-    public MenuItem(char symbol, String caption, Function<ConsoleMenuApp,Void> operation)
+    public MenuItem(char symbol, String caption, Runnable operation)
     {
         Symbol = symbol;
         Caption = caption;
@@ -24,7 +24,7 @@ public class ConsoleMenuApp {
     private char NextSymbol = '1';
     private Scanner Scan = new Scanner(System.in);
 
-    protected void RegisterMenuItem(String caption, Function<ConsoleMenuApp, Void> func) throws Exception
+    protected void RegisterMenuItem(String caption, Runnable func) throws Exception
     {
         MenuItems.add(new MenuItem(NextSymbol, caption, func));
 
@@ -45,7 +45,7 @@ public class ConsoleMenuApp {
         // Добавляем операции
         AppSetup();
 
-        RegisterMenuItem("Exit", (ConsoleMenuApp)->{ Exit(); return null; });
+        RegisterMenuItem("Exit", this::Exit);
     }
 
     public void AppSetup() throws Exception
@@ -53,13 +53,19 @@ public class ConsoleMenuApp {
 
     }
 
-    public void Run()
+    public void AppExit() throws Exception
+    {
+
+    }
+
+    public void Run() throws Exception
     {
         while (Running)
         {
             DisplayMenu();
             HandleOperation();
         }
+        AppExit();
     }
 
     public void DisplayMenu()
@@ -93,7 +99,7 @@ public class ConsoleMenuApp {
             }
         }
 
-        if(found_item != null) found_item.Operation.apply(this);
+        if(found_item != null) found_item.Operation.run();
         else System.out.println("Unknown operation");
 
         System.out.println();

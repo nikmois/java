@@ -3,9 +3,11 @@ package com.company;
 import com.company.ConsoleMenuApp;
 import com.company.Employee;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class DatabaseApplication extends ConsoleMenuApp
@@ -15,6 +17,33 @@ public class DatabaseApplication extends ConsoleMenuApp
     public DatabaseApplication()
     {
         employees = new ArrayList<>();
+    }
+
+    public ArrayList<Employee> LoadFile(String filename) throws IOException {
+        // Создаём объект типа "файл"
+        File file = new File("employees.txt");
+        // Создаём поток чтения из файла
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+
+        ArrayList<Employee> employees = new ArrayList<>();
+
+        String s;
+        // Читаем до тех пор, пока не дошли до конца файла (readLine() не вернул null)
+        while((s = reader.readLine()) != null)
+        {
+            // Пилим строчку на компоненты по разделителю
+            String[] parts = s.split(",");
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+            Employee e = new Employee(parts[0], parts[1], LocalDate.parse(parts[2],formatter));
+            e.setSalary(Double.parseDouble(parts[3]));
+            employees.add(e);
+        }
+
+        reader.close();
+
+        return employees;
     }
 
     public void Insert()
@@ -177,11 +206,35 @@ public class DatabaseApplication extends ConsoleMenuApp
     @Override
     public void AppSetup() throws Exception
     {
-        RegisterMenuItem("Insert entry", (ConsoleMenuApp)->{ Insert(); return null; });
-        RegisterMenuItem("View employee list", (ConsoleMenuApp)->{ PrintData(); return null; });
-        RegisterMenuItem("Insert test data", (ConsoleMenuApp)->{ TestData(); return null; });
-        RegisterMenuItem("Delete employee data", (ConsoleMenuApp)->{ DeleteEmployee(); return null; });
-        RegisterMenuItem("Change employee data", (ConsoleMenuApp)->{ ChangeEmployee(); return null; });
+        // Регистрируем записи в меню
+        RegisterMenuItem("Insert entry", this::Insert);
+        RegisterMenuItem("View employee list", this::PrintData);
+        RegisterMenuItem("Add test data", this::TestData);
+        RegisterMenuItem("Remove employee data", this::DeleteEmployee);
+        RegisterMenuItem("Change employee data", this::ChangeEmployee);
+
+
+        employees = LoadFile("employees.txt");
+    }
+
+    @Override
+    public void AppExit() throws Exception
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Do you want to save file?");
+        System.out.println("Y/N");
+        String answer = scanner.next();
+        if(answer.equals("Y") || answer.equals("y")) {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("employees.txt"));
+
+            for (Employee e : employees) {
+                String date = String.format("%02d.%02d.%4d", e.Birthday.getDayOfMonth(), e.Birthday.getMonthValue(), e.Birthday.getYear());
+                writer.write(e.FirstName+","+e.LastName+","+date+","+e.Salary);
+                writer.write("\n");
+            }
+
+            writer.close();
+        }
     }
 
     /*public void Run()

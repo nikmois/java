@@ -1,0 +1,5 @@
+Masha,Koka,15.05.1998,2000.0
+Mas,LOlololol,15.06.1998,20.0
+Klava,Braim,16.01.1945,5000.0
+Borya,Drozdov,14.04.1997,800.0
+Mike,Sand,24.07.2001,500.0
