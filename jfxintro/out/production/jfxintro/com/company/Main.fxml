@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<!--fx:controller="Main"-->
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0">
+        <GridPane hgap="10" vgap="10"
+                  AnchorPane.bottomAnchor="0"
+                  AnchorPane.topAnchor="0"
+                  AnchorPane.leftAnchor="0"
+                  AnchorPane.rightAnchor="0">
+                <Text text="Hello KTA-20V" GridPane.rowIndex="0" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                <Button text="Click me" GridPane.rowIndex="1" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                <CheckBox text="Check" GridPane.rowIndex="0" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                <TextField text="1234" GridPane.rowIndex="1" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        </GridPane>
+</AnchorPane>
